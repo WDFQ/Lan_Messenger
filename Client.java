@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.*;
 import java.util.UUID;
 
@@ -25,26 +26,29 @@ public class Client {
             System.err.println("Could not find local host: " + e.getMessage());
         }
 
-        try(DatagramSocket helloSocket = new DatagramSocket(BROADCAST_PORT)) {
+        try(DatagramSocket helloSocket = new DatagramSocket()) {
 
             //Starts threads; listens to broadcast, listens to chat requests
-            new Thread(() -> broadcastListener(helloSocket)).start();
+            new Thread(Client::broadcastListener).start();
             new Thread(Client::inviteListener).start();
 
             //broadcast udp packets
-            //protocol: USERNAME <username> REQUEST <request>
-            String message = "USERNAME" + " " + username + "REQUEST" + " " + "HELLO";
-
+            //protocol: USERNAME <username> ID <UUID> REQUEST <request>
+            String message = "USERNAME" + " " + username + "ID" + " " + uuid +  "REQUEST" + " " + "HELLO";
 
             //assigns broadcasting address
             try {
+                //Create packet and send
                 helloSocket.setBroadcast(true);
                 InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
                 DatagramPacket sendPacket = new DatagramPacket(message.getBytes(), message.length(), broadcastAddress, BROADCAST_PORT);
                 //use UUID to prevent sending to yourself
-
-
-                helloSocket.send(sendPacket);
+                try {
+                    helloSocket.send(sendPacket);
+                }
+                catch (IOException e){
+                    System.err.println("Error sending broadcast: " + e.getMessage());
+                }
             }
             catch (UnknownHostException e) {
                 System.err.println("Assigning broadcast address error: " + e.getMessage());
@@ -63,13 +67,31 @@ public class Client {
     /**
      * Listens for hello packets from other devices on the network
      */
-    private static void broadcastListener(DatagramSocket helloSocket){
+    private static void broadcastListener(){
         byte[] buffer = new byte[1024];
 
-        try{
+        //socket listening on port 8888
+        try(DatagramSocket helloSocket = new DatagramSocket(BROADCAST_PORT)){
             while(true){
+                //receiving packet from broadcast
                 DatagramPacket broadcastPacket = new DatagramPacket(buffer, buffer.length);
                 helloSocket.receive(broadcastPacket);
+
+                //get and split message
+                String message = new String(broadcastPacket.getData(), 0, broadcastPacket.getLength());
+                String[] messageArr = message.split(" ");
+                String senderID = messageArr[3];
+
+                //filter messages from self
+                if (senderID.equals(uuid.toString())){
+                    continue;
+                }
+
+
+
+
+
+
 
             }
         }
