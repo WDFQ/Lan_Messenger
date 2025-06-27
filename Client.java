@@ -17,42 +17,39 @@ public class Client {
             return;
         }
 
-        //fetch device's IP and username
-        String username = args[0];
-        try {
-            InetAddress localHost = InetAddress.getLocalHost();
-        }
-        catch (UnknownHostException e) {
-            System.err.println("Could not find local host: " + e.getMessage());
-        }
-
+        //create non binding socket for sending
         try(DatagramSocket helloSocket = new DatagramSocket()) {
 
             //Starts threads; listens to broadcast, listens to chat requests
             new Thread(Client::broadcastListener).start();
             new Thread(Client::inviteListener).start();
-
-            //broadcast udp packets
+          
             //protocol: USERNAME <username> ID <UUID> REQUEST <request>
-            String message = "USERNAME" + " " + username + "ID" + " " + uuid +  "REQUEST" + " " + "HELLO";
-
-            //assigns broadcasting address
-            try {
+            String message = "USERNAME" + " " + args[0] + "ID" + " " + uuid +  "REQUEST" + " " + "HELLO";
+            helloSocket.setBroadcast(true);
+            
+            //continously send packets
+            while (true) {
                 //Create packet and send
-                helloSocket.setBroadcast(true);
-                InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
-                DatagramPacket sendPacket = new DatagramPacket(message.getBytes(), message.length(), broadcastAddress, BROADCAST_PORT);
-                //use UUID to prevent sending to yourself
                 try {
-                    helloSocket.send(sendPacket);
+
+                    InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
+                    DatagramPacket sendPacket = new DatagramPacket(message.getBytes(), message.length(), broadcastAddress, BROADCAST_PORT);
+                    
+                    //send packet
+                    try {
+                        helloSocket.send(sendPacket);
+                    }
+                    catch (IOException e){
+                        System.err.println("Error sending broadcast: " + e.getMessage());
+                    }
+
                 }
-                catch (IOException e){
-                    System.err.println("Error sending broadcast: " + e.getMessage());
+                catch (UnknownHostException e) {
+                    System.err.println("Assigning broadcast address error: " + e.getMessage());
                 }
             }
-            catch (UnknownHostException e) {
-                System.err.println("Assigning broadcast address error: " + e.getMessage());
-            }
+            
         }
         catch (java.net.SocketException e) {
             System.out.println("Socket creation error: " + e.getMessage());
@@ -80,26 +77,22 @@ public class Client {
                 //get and split message
                 String message = new String(broadcastPacket.getData(), 0, broadcastPacket.getLength());
                 String[] messageArr = message.split(" ");
+                String senderUsername = messageArr[1];
                 String senderID = messageArr[3];
+                String senderReq = messageArr[5];
 
                 //filter messages from self
                 if (senderID.equals(uuid.toString())){
                     continue;
                 }
 
-
-
-
-
-
+                //print received packet
+                System.out.println("Username: " + senderUsername + " ID: " + senderID + " Type: " + senderReq);
 
             }
         }
         catch(Exception e){
             System.out.println("Broadcast listening error: " + e.getMessage());
         }
-
     }
-
-
 }
