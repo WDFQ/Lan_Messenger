@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ebe7ce; -fx-border-width: 15 5 5 5; -fx-border-color: #0156e5; -fx-border-style: none solid solid solid;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lancr.CharacterSelectController">
+   <top>
+      <HBox prefHeight="36.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label lineSpacing="10.0" prefHeight="70.0" prefWidth="590.0" style="-fx-padding: 10;" text="LAN CHATROOM">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="40.0" />
+               </font></Label>
+         </children></HBox>
+   </top>
+</BorderPane>

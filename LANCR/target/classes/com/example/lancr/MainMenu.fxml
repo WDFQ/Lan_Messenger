@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ebe7ce; -fx-border-width: 15 5 5 5; -fx-border-color: #0156e5; -fx-border-style: none solid solid solid;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lancr.MainMenuController">
+   <top>
+      <HBox prefHeight="36.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label fx:id="titleText" lineSpacing="10.0" prefHeight="70.0" prefWidth="590.0" style="-fx-padding: 10;" text="LAN CHATROOM" textAlignment="CENTER">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="40.0" />
+               </font></Label>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox prefHeight="302.0" prefWidth="321.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="usernameLabel" style="-fx-padding: 5 5 5 5;" text="Enter username:">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usernameTextField" prefHeight="31.0" prefWidth="511.0" promptText="Type username here">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="15.0" />
+               </font>
+            </TextField>
+            <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitUsername" prefHeight="36.0" prefWidth="99.0" text="Start">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>
