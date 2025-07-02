@@ -25,28 +25,35 @@ public class Client {
             new Thread(Client::inviteListener).start();
           
             //protocol: USERNAME <username> ID <UUID> REQUEST <request>
-            String message = "USERNAME" + " " + args[0] + "ID" + " " + uuid +  "REQUEST" + " " + "HELLO";
+            String message = String.format("USERNAME %s ID %s REQUEST HELLO", args[0], uuid);
+            System.out.println(message);
             helloSocket.setBroadcast(true);
             
             //continously send packets
             while (true) {
-                //Create packet and send
                 try {
-
                     InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
-                    DatagramPacket sendPacket = new DatagramPacket(message.getBytes(), message.length(), broadcastAddress, BROADCAST_PORT);
-                    
-                    //send packet
-                    try {
-                        helloSocket.send(sendPacket);
-                    }
-                    catch (IOException e){
-                        System.err.println("Error sending broadcast: " + e.getMessage());
-                    }
+                    DatagramPacket sendPacket = new DatagramPacket(
+                            message.getBytes(),
+                            message.length(),
+                            broadcastAddress,
+                            BROADCAST_PORT
+                    );
 
+                    helloSocket.send(sendPacket);
+                    System.out.println("Broadcast sent: " + message);
+                    //wait 3 seconds before next packet send
+                    Thread.sleep(3000);
                 }
                 catch (UnknownHostException e) {
                     System.err.println("Assigning broadcast address error: " + e.getMessage());
+                }
+                catch (IOException e) {
+                    System.err.println("Error sending broadcast: " + e.getMessage());
+                }
+                catch (InterruptedException e) {
+                    System.err.println("Sleep interrupted: " + e.getMessage());
+                    Thread.currentThread().interrupt();
                 }
             }
             
@@ -81,8 +88,10 @@ public class Client {
                 String senderID = messageArr[3];
                 String senderReq = messageArr[5];
 
+
                 //filter messages from self
                 if (senderID.equals(uuid.toString())){
+                    System.out.println("Rejected Self Packet");
                     continue;
                 }
 
