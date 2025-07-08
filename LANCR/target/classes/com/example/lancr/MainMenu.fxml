@@ -43,7 +43,7 @@
             </TextField>
             <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitUsername" prefHeight="36.0" prefWidth="99.0" text="Start">
                <font>
-                  <Font name="Windows XP Tahoma Regular" size="12.0" />
+                  <Font name="Windows XP Tahoma Regular" size="20.0" />
                </font>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

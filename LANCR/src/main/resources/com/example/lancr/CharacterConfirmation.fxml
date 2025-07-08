@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ebe7ce; -fx-border-width: 15 5 5 5; -fx-border-color: #0156e5; -fx-border-style: none solid solid solid;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lancr.CharacterConfirmationController">
+   <top>
+      <HBox prefHeight="70.0" prefWidth="590.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@icon.png" />
+               </image></ImageView>
+            <Label lineSpacing="10.0" style="-fx-padding: 10;" text="LAN CHATROOM">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="40.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Label>
+         </children></HBox>
+   </top>
+   <left>
+      <VBox alignment="TOP_CENTER" prefHeight="310.0" prefWidth="593.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Is this you?">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <ImageView fx:id="userCharacterImage" fitHeight="150.0" fitWidth="200.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+               <VBox.margin>
+                  <Insets bottom="2.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </ImageView>
+            <Label fx:id="usernameLabel" text="Username">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </padding>
+            </Label>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="returnButton" mnemonicParsing="false" onAction="#returnToCharacterSelect" prefHeight="36.0" prefWidth="99.0" text="Go back!">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="40.0" top="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Windows XP Tahoma Regular" size="20.0" />
+                     </font></Button>
+                  <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="99.0" text="Yes!">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="40.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Windows XP Tahoma Regular" size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </left>
+</BorderPane>

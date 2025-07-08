@@ -5,17 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.stage.StageStyle;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.image.Image;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
 
@@ -38,12 +31,9 @@ public class Main extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
 
-        // Setting custom font
-        Image icon = new Image(getClass().getResourceAsStream("/com/example/lancr/icon.png"));
-        if (icon != null){
-            stage.getIcons().add(icon);
-        }
-
+        // Setting custom icon
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/com/example/lancr/icon.png")));
+        stage.getIcons().add(icon);
 
         // Shows the stage
         stage.show();

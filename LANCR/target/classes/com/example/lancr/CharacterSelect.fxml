@@ -24,4 +24,99 @@
                </font></Label>
          </children></HBox>
    </top>
+   <left>
+      <VBox prefHeight="302.0" prefWidth="589.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="welcomeLabel">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="25.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin></Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="pinkCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#pinkSelect" onMouseEntered="#pinkHoverOn" onMouseExited="#pinkHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@Characters/PinkCharacterShadow.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="blueCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#blueSelect" onMouseEntered="#blueHoverOn" onMouseExited="#blueHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Characters/BlueCharacterShadow.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="greenCharacter" fitHeight="100.0" fitWidth="105.0" onMouseClicked="#greenSelect" onMouseEntered="#greenHoverOn" onMouseExited="#greenHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Characters/GreenCharacterShadow.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="yellowCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#yellowSelect" onMouseEntered="#yellowHoverOn" onMouseExited="#yellowHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="5.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@Characters/YellowCharacterShadow.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <ImageView fx:id="orangeCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#orangeSelect" onMouseEntered="#orangeHoverOn" onMouseExited="#orangeHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@Characters/OrangeCharacterShadow.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="blackCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#blackSelect" onMouseEntered="#blackHoverOn" onMouseExited="#blackHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Characters/BlackCharacterShadow.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="whiteCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#whiteSelect" onMouseEntered="#whiteHoverOn" onMouseExited="#whiteHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@Characters/WhiteCharacterShadow.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="purpleCharacter" fitHeight="100.0" fitWidth="100.0" onMouseClicked="#purpleSelect" onMouseEntered="#purpleHoverOn" onMouseExited="#purpleHoverOff" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Characters/PurpleCharacterShadow.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </left>
+   <bottom>
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#returnMainMenu" prefHeight="36.0" prefWidth="99.0" text="Back" BorderPane.alignment="BOTTOM_LEFT">
+         <font>
+            <Font name="Windows XP Tahoma Regular" size="20.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Button>
+   </bottom>
 </BorderPane>

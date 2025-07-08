@@ -36,10 +36,13 @@ public class MainMenuController {
         try{
             if (!usernameTextField.getText().isEmpty()){
                 username = usernameTextField.getText();
-                System.out.println("username is " + username);
 
-                // Moves to the CharacterSelect scene
-                Parent root = FXMLLoader.load(getClass().getResource("CharacterSelect.fxml"));
+                // Moves to the CharacterSelect scene and sends the username
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("CharacterSelect.fxml"));
+                root = loader.load();
+                CharacterSelectController characterSelectController = loader.getController();
+                characterSelectController.displayUsername(username);
+
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
