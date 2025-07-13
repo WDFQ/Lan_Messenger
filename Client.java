@@ -29,8 +29,8 @@ public class Client {
             new Thread(Client::broadcastListener).start();
             new Thread(Client::inviteListener).start();
           
-            //protocol: USERNAME <username> ID <UUID> REQUEST <request>
-            String message = String.format("USERNAME %s ID %s REQUEST HELLO", args[0], uuid);
+            //protocol: USERNAME <username> ID <UUID> IP <IP> REQUEST <request>
+            String message = String.format("USERNAME %s ID %s IP %s REQUEST HELLO", args[0], InetAddress.getLocalHost().toString() , uuid);
             helloSocket.setBroadcast(true);
             
             //continuously send packets
@@ -59,6 +59,9 @@ public class Client {
         catch (java.net.SocketException e) {
             System.out.println("Socket creation error: " + e.getMessage());
         }
+        catch (java.net.UnknownHostException e){
+
+        }
     }
 
     private static void inviteListener(){
@@ -81,11 +84,13 @@ public class Client {
                 helloSocket.receive(broadcastPacket);
 
                 //get and split message
+                //protocol: USERNAME <username> ID <UUID> IP <IP> REQUEST <request>
                 String message = new String(broadcastPacket.getData(), 0, broadcastPacket.getLength());
                 String[] messageArr = message.split(" ");
                 String senderUsername = messageArr[1];
                 String senderID = messageArr[3];
-                String senderReq = messageArr[5];
+                String senderIP = messageArr[5];
+                String senderReq = messageArr[7];
 
                 //filter messages from self
                 if (senderID.equals(uuid.toString())){
