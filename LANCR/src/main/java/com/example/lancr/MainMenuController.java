@@ -26,11 +26,6 @@ public class MainMenuController {
     private Scene scene;
     private Parent root;
 
-    @FXML
-    protected void initialize() {
-
-    }
-
     public void submitUsername(ActionEvent event){
         // Ensures the username is not empty
         try{
@@ -59,5 +54,8 @@ public class MainMenuController {
         }
     }
 
+    public void onEnter(ActionEvent ae){
+        submitUsername(ae);
+    }
 }
 

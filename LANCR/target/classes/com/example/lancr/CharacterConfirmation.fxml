@@ -62,7 +62,7 @@
                      <font>
                         <Font name="Windows XP Tahoma Regular" size="20.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="99.0" text="Yes!">
+                  <Button fx:id="continueButton" mnemonicParsing="false" onAction="#continueToUserSelect" prefHeight="36.0" prefWidth="99.0" text="Yes!">
                      <HBox.margin>
                         <Insets bottom="5.0" left="40.0" right="5.0" top="5.0" />
                      </HBox.margin>

@@ -4,6 +4,7 @@ module com.example.lancr {
 
     requires org.controlsfx.controls;
     requires org.kordamp.ikonli.javafx;
+    requires java.desktop;
 
     opens com.example.lancr to javafx.fxml;
     exports com.example.lancr;

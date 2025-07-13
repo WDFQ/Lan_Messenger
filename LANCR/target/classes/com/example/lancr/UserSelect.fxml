@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ebe7ce; -fx-border-width: 15 5 5 5; -fx-border-color: #0156e5;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lancr.UserSelectController">
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="logoImage" fitHeight="43.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" top="5.0" />
+               </HBox.margin></ImageView>
+            <Label lineSpacing="10.0" style="-fx-padding: 10;" text="LAN CHATROOM">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="40.0" />
+               </font></Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="usernameLabel" alignment="CENTER_RIGHT" text="Username">
+               <font>
+                  <Font name="Windows XP Tahoma Regular" size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <padding>
+                  <Insets bottom="5.0" left="30.0" right="30.0" top="5.0" />
+               </padding>
+            </Label>
+         </children></HBox>
+   </top>
+</BorderPane>

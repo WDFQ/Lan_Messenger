@@ -33,7 +33,7 @@
                   <Font name="Windows XP Tahoma Regular" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="usernameTextField" prefHeight="31.0" prefWidth="511.0" promptText="Type username here">
+            <TextField fx:id="usernameTextField" onAction="#onEnter" prefHeight="31.0" prefWidth="511.0" promptText="Type username here">
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
