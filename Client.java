@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Client {
     //create host credentials on network
-    private static final int BROADCAST_PORT = 8888;
+    private static int BROADCAST_PORT = 8888;
     private static final int INVITE_PORT = 8889;
     private static final UUID uuid = UUID.randomUUID();
     private static final String BROADCAST_ADDRESS = "255.255.255.255";
@@ -12,9 +12,14 @@ public class Client {
        
     public static void main(String[] args) {
         //ensures the args contain both host name and port
-        if (args.length != 1){
-            System.out.println("Usage: <username>");
+        if (args.length < 1){
+            System.out.println("Usage: <username> [port]");
             return;
+        }
+
+        // Allow port override for testing
+        if (args.length > 1) {
+            BROADCAST_PORT = Integer.parseInt(args[1]);
         }
 
         //create non binding socket for sending
@@ -26,23 +31,17 @@ public class Client {
           
             //protocol: USERNAME <username> ID <UUID> REQUEST <request>
             String message = String.format("USERNAME %s ID %s REQUEST HELLO", args[0], uuid);
-            System.out.println(message);
             helloSocket.setBroadcast(true);
             
-            //continously send packets
+            //continuously send packets
             while (true) {
                 try {
                     InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
-                    DatagramPacket sendPacket = new DatagramPacket(
-                            message.getBytes(),
-                            message.length(),
-                            broadcastAddress,
-                            BROADCAST_PORT
-                    );
-
+                    DatagramPacket sendPacket = new DatagramPacket(message.getBytes(), message.length(), broadcastAddress, BROADCAST_PORT);
                     helloSocket.send(sendPacket);
+
                     System.out.println("Broadcast sent: " + message);
-                    //wait 3 seconds before next packet send
+                    //wait 3 seconds before the next packet send
                     Thread.sleep(3000);
                 }
                 catch (UnknownHostException e) {
@@ -56,7 +55,6 @@ public class Client {
                     Thread.currentThread().interrupt();
                 }
             }
-            
         }
         catch (java.net.SocketException e) {
             System.out.println("Socket creation error: " + e.getMessage());
@@ -76,6 +74,7 @@ public class Client {
 
         //socket listening on port 8888
         try(DatagramSocket helloSocket = new DatagramSocket(BROADCAST_PORT)){
+            helloSocket.setReuseAddress(true);
             while(true){
                 //receiving packet from broadcast
                 DatagramPacket broadcastPacket = new DatagramPacket(buffer, buffer.length);
@@ -87,7 +86,6 @@ public class Client {
                 String senderUsername = messageArr[1];
                 String senderID = messageArr[3];
                 String senderReq = messageArr[5];
-
 
                 //filter messages from self
                 if (senderID.equals(uuid.toString())){
