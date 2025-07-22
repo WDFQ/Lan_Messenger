@@ -65,7 +65,11 @@ public class Client {
     }
 
     private static void inviteListener(){
-
+		byte[] buffer = new byte[1024]
+		
+		try(DatagramSocket inviteSocket = new DatagramSocket(INVITE_PORT)){
+			
+		}
     }
 
 
