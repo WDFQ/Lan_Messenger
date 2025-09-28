@@ -62,13 +62,14 @@ public class Client {
         catch (java.net.UnknownHostException e){
 
         }
-    }
+    }   
 
+    //checks if any invites are sent
     private static void inviteListener(){
-		byte[] buffer = new byte[1024]
+		byte[] buffer = new byte[1024];
 		
 		try(DatagramSocket inviteSocket = new DatagramSocket(INVITE_PORT)){
-			
+            
 		}
     }
 
