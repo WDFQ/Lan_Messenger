@@ -1,0 +1,152 @@
+﻿Here’s a comprehensive, formatted documentation for your Client class — written as if it were part of a professional software project or assignment submission.
+It explains each port, thread, method, and data flow, and explicitly references relevant code sections.
+
+📘 Documentation: Client.java
+Overview
+The Client class is a simple UDP-based discovery client designed to broadcast its presence over a local network and listen for other active clients. It uses multithreading to handle broadcasting and listening simultaneously.
+
+⚙️ Class Overview
+public class Client {
+    private static int BROADCAST_PORT = 8888;
+    private static final int INVITE_PORT = 8889;
+    private static final UUID uuid = UUID.randomUUID();
+    private static final String BROADCAST_ADDRESS = "255.255.255.255";
+}
+Fields:
+    • BROADCAST_PORT (default 8888):
+Used for sending and receiving “HELLO” broadcast packets that announce a client’s presence on the local network.
+    • INVITE_PORT (8889):
+Intended for direct invitations or chat requests between clients.
+    • uuid (randomly generated):
+Unique identifier for each client instance. Used to filter out self-broadcast messages.
+    • BROADCAST_ADDRESS ("255.255.255.255"):
+Universal IPv4 broadcast address used to send packets visible to all devices on the same network subnet.
+
+🚀 Main Execution Flow
+1. Entry Point — main(String[] args)
+public static void main(String[] args) {
+    if (args.length < 1){
+        System.out.println("Usage: <username> [port]");
+        return;
+    }
+    ...
+}
+Purpose:
+Ensures that a username is provided, optionally allowing the broadcast port to be overridden (useful for testing multiple instances on one machine).
+Example Run:
+java Client Jeff 9999
+
+2. Socket Setup & Thread Initialization
+try (DatagramSocket helloSocket = new DatagramSocket()) {
+    new Thread(Client::broadcastListener).start();
+    new Thread(Client::inviteListener).start();
+    • Creates a non-bound DatagramSocket (helloSocket) — used for sending packets only.
+    • Starts two background threads:
+        ◦ broadcastListener → listens for other devices’ “HELLO” messages.
+        ◦ inviteListener → intended for future chat/invite features.
+
+3. Broadcast Message Construction
+String message = String.format(
+    "USERNAME %s ID %s IP %s REQUEST HELLO",
+    args[0], InetAddress.getLocalHost().toString(), uuid
+);
+helloSocket.setBroadcast(true);
+The message follows this protocol format:
+USERNAME <username> ID <UUID> IP <IP> REQUEST <request>
+Example:
+USERNAME Jeff ID 123e4567-e89b-12d3-a456-426614174000 IP 192.168.1.5 REQUEST HELLO
+
+4. Continuous Broadcast Loop
+while (true) {
+    InetAddress broadcastAddress = InetAddress.getByName(BROADCAST_ADDRESS);
+    DatagramPacket sendPacket = new DatagramPacket(
+        message.getBytes(),
+        message.length(),
+        broadcastAddress,
+        BROADCAST_PORT
+    );
+    helloSocket.send(sendPacket);
+    System.out.println("Broadcast sent: " + message);
+    Thread.sleep(3000);
+}
+Behavior:
+    • Sends the HELLO message to all devices on the network (via 255.255.255.255) every 3 seconds.
+    • Uses a DatagramPacket to encapsulate the data.
+    • The Thread.sleep(3000) introduces a delay to prevent network flooding.
+
+🧵 Thread 1 — broadcastListener()
+private static void broadcastListener() {
+    byte[] buffer = new byte[1024];
+    try (DatagramSocket helloSocket = new DatagramSocket(BROADCAST_PORT)) {
+        helloSocket.setReuseAddress(true);
+        while (true) {
+            DatagramPacket broadcastPacket = new DatagramPacket(buffer, buffer.length);
+            helloSocket.receive(broadcastPacket);
+            ...
+        }
+    }
+}
+Functionality:
+    • Listens for incoming UDP packets on port 8888.
+    • Each received message is parsed to extract:
+        ◦ Username
+        ◦ UUID
+        ◦ IP address
+        ◦ Request type
+Message Parsing
+String message = new String(broadcastPacket.getData(), 0, broadcastPacket.getLength());
+String[] messageArr = message.split(" ");
+String senderUsername = messageArr[1];
+String senderID = messageArr[3];
+String senderIP = messageArr[5];
+String senderReq = messageArr[7];
+Self-Packet Filtering
+if (senderID.equals(uuid.toString())) {
+    System.out.println("Rejected Self Packet");
+    continue;
+}
+This ensures the client ignores its own broadcast messages, identified via UUID.
+Output Example
+Username: Jeff ID: 123e4567-e89b-12d3-a456-426614174000 Type: HELLO
+
+🧵 Thread 2 — inviteListener()
+private static void inviteListener() {
+    byte[] buffer = new byte[1024];
+    try (DatagramSocket inviteSocket = new DatagramSocket(INVITE_PORT)) {
+        // Placeholder: no functionality yet
+    }
+}
+Functionality (Planned):
+    • Opens a UDP socket on port 8889, intended for direct communication or invitation messages.
+    • Currently, this method only initializes the socket; message-handling logic is not yet implemented.
+
+🔁 Data Flow Summary
+Action	Thread	Port	Description
+Broadcast HELLO messages	Main thread	8888	Sends presence announcements every 3 seconds
+Listen for HELLO messages	broadcastListener	8888	Receives broadcasts from other clients
+Listen for invites	inviteListener	8889	Reserved for future chat/invite system
+
+🧩 Example Network Behavior
+Device	UUID	Behavior
+Client A	UUID_A	Sends “HELLO” on port 8888 → Receives “HELLO” from Client B
+Client B	UUID_B	Sends “HELLO” on port 8888 → Receives “HELLO” from Client A
+Both	—	Ignore messages containing their own UUID
+
+💡 Key Features
+    • Simultaneous broadcasting and listening using threads.
+    • Self-filtering mechanism using UUID comparison.
+    • Custom UDP protocol format for user discovery.
+    • Reusable socket handling via try-with-resources (automatic closure).
+    • Extensible design — ready for invitation or chat feature expansion.
+
+🧠 Example Output (Two Clients Running)
+Client 1 (Jeff):
+Broadcast sent: USERNAME Jeff ID ... REQUEST HELLO
+Username: Alice ID: ... Type: HELLO
+Client 2 (Alice):
+Broadcast sent: USERNAME Alice ID ... REQUEST HELLO
+Username: Jeff ID: ... Type: HELLO
+
+Would you like me to add inline Javadoc comments (so it’s fully documented within the code itself for submission or IDE use)?
+I can rewrite it with proper /** ... */ documentation tags for every method and field.
+

@@ -1,5 +1,8 @@
 import java.io.IOException;
-import java.net.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.UUID;
 
 public class Client {
@@ -64,13 +67,50 @@ public class Client {
         }
     }   
 
-    //checks if any invites are sent
+    /**
+     * checks for invites on port 8889
+     */
     private static void inviteListener(){
 		byte[] buffer = new byte[1024];
+
+        //socket listening on port 8888
+        try(DatagramSocket inviteSocket = new DatagramSocket(INVITE_PORT)){
+            inviteSocket.setReuseAddress(true);
+            while(true){
+                //receiving packet from broadcast
+                DatagramPacket broadcastPacket = new DatagramPacket(buffer, buffer.length);
+                inviteSocket.receive(broadcastPacket);
+
+                //get and split message
+                //protocol: USERNAME <username> ID <UUID> IP <IP> REQUEST <request>
+                String message = new String(broadcastPacket.getData(), 0, broadcastPacket.getLength());
+                String[] messageArr = message.split(" ");
+                String senderUsername = messageArr[1];
+                String senderID = messageArr[3];
+                String senderIP = messageArr[5];
+                String senderReq = messageArr[7];
+
+                //filter messages from self
+                if (senderID.equals(uuid.toString())){
+                    System.out.println("Rejected Self Packet");
+                    continue;
+                }
+                else{
+                    //establish tcp connection with device that sent invite
+                    
+
+                }
+
+                //print received packet
+                System.out.println("Username: " + senderUsername + " ID: " + senderID + " Type: " + senderReq);
+
+            }
+        }
+        catch(Exception e){
+            System.out.println("Broadcast listening error: " + e.getMessage());
+        }
 		
-		try(DatagramSocket inviteSocket = new DatagramSocket(INVITE_PORT)){
-            
-		}
+		
     }
 
 
